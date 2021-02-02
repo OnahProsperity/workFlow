@@ -1,19 +1,19 @@
 pragma solidity ^0.8.0;
 
 contract AddressBook {
-    // storage
+    // Storage
     mapping(address => address[]) private _addresses;
     mapping(address => mapping(address => string)) private _aliases;
 
-    // getting a particular address from the storage
-    function getAddresses() public view returns (address[]) {
+    //getting the msg.sender address from storage
+    function getAddresses() public view returns (address[] memory) {
         return _addresses[msg.sender];
     }
 
-    // adding adress and name of the address owner into the storage
-    function addAddress(address addr, string alias) public {
+        // adding adress and name of the address owner into the storage
+    function addAddress(address addr, string memory _alias) public {
         _addresses[msg.sender].push(addr);
-        _aliases[msg.sender][addr] = alias;
+        _aliases[msg.sender][addr] = _alias;
     }
 
     // removing a particualar address from storage
@@ -27,7 +27,6 @@ contract AddressBook {
                     _addresses[msg.sender][i] = _addresses[msg.sender][length-1];
                 }
                 delete _addresses[msg.sender][length-1];
-                _addresses[msg.sender].length--;
                 delete _aliases[msg.sender][addr];
                 break;
             }
@@ -35,7 +34,7 @@ contract AddressBook {
     }
 
     // getting an address by name from storage.
-    function getAlias(address addr) public view returns (string) {
+    function getAlias(address addr) public view returns (string memory) {
         return _aliases[msg.sender][addr];
     }
 }
